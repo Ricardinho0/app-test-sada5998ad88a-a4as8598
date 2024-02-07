@@ -24,7 +24,7 @@ for (let i = 1; i <= 10; i++) {
 }
 const Clients = ({ navigation }) => {
     return (
-        <ScrollView style={styles.container}>
+        <ScrollView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
                 <TouchableOpacity onPress={() => navigation.goBack()}>
                     <Feather name="x" size={22} color="black" />
@@ -35,7 +35,7 @@ const Clients = ({ navigation }) => {
             <View style={{ gap: 5, marginTop: 25 }}>
             {
                 clientes.map(({ name, id },_index) => (
-                    <TouchableOpacity style={[styles.itemClients, {
+                    <TouchableOpacity key={id + _index} style={[styles.itemClients, {
                         backgroundColor: _index % 2 === 0 ? Theme.papper : Theme.background
                      }]}>
                         <Text key={id}>{name}</Text>

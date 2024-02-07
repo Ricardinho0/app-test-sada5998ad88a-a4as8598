@@ -1,4 +1,4 @@
-import { Image, Text, TextInput, TouchableOpacity, View, ScrollView } from "react-native"
+import { Image, Text, TextInput, TouchableOpacity, View, ScrollView, ActivityIndicator } from "react-native"
 import Validator from "validator"
 import { styles } from "./styles";
 import { Feather } from "@expo/vector-icons";
@@ -10,12 +10,14 @@ import { AuthService } from "../../service/auth";
 
 import Toast from 'react-native-toast-message'
 import useAuth from "../../context/auth";
+import { Theme } from "../../theme";
 
 const LoginScreen = () => {
 
     const { Authenticate } = useAuth();
 
-    const [showPassword, setShowPassword] = useState(false)
+    const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const {
         control,
@@ -28,6 +30,7 @@ const LoginScreen = () => {
         },
     })
     const onSubmit = ({ username, password }) => {
+        setLoading(true)
         AuthService.login(username, password)
         .then(({ data }) => {
             Authenticate(data)
@@ -48,6 +51,7 @@ const LoginScreen = () => {
                 text1: 'Erro ao realizar login.'
             })
         })
+        .finally(() => { setLoading(false) })
     }
 
     return (
@@ -131,9 +135,12 @@ const LoginScreen = () => {
                     </View>
                     {errors.password && errors.password.message?.length > 0 &&
                         <Text style={{ color: 'red' }}>{errors?.password?.message}</Text>}
-                    <TouchableOpacity style={[GlobalStyles.btn, { marginTop: 25 }]} onPress={handleSubmit(onSubmit)}>
+                    <TouchableOpacity 
+                    disabled={loading}
+                    style={[GlobalStyles.btn, { marginTop: 25, backgroundColor: !loading ? Theme.primary : Theme.grey[100], }]} 
+                    onPress={handleSubmit(onSubmit)}>
                         <Text style={styles.textLogin}>
-                            Entrar
+                        {loading ? <ActivityIndicator /> :  "Entrar"}
                         </Text>
                     </TouchableOpacity>
                 </View>

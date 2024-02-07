@@ -1,6 +1,6 @@
 {
   "expo": {
-    "name": "appfv",
+    "name": "Força de Venda",
     "slug": "appfv",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -36,7 +36,6 @@
       "favicon": "./assets/favicon.png"
     },
     "plugins": [
-      "expo-font",
       [
         "expo-barcode-scanner",
         {

@@ -16,7 +16,6 @@ export const AuthProvider = ({ children }) => {
             return _u
         })
         return null
-        
     });
 
     const Authenticate = (data) => {

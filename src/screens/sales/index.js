@@ -1,18 +1,30 @@
-import { FontAwesome6, Entypo, FontAwesome5 } from "@expo/vector-icons"
+import { Entypo, FontAwesome5 } from "@expo/vector-icons"
 import { FlatList, SafeAreaView, ScrollView, Text, TouchableOpacity, View } from "react-native"
 import { styles } from "./styles"
 import { GlobalStyles } from "../../components/GlobalStyles"
 import { Theme } from "../../theme"
 import { useState } from "react"
 import { ProductsList } from "../products"
-import moment from "moment"
+
+function formatarData() {
+    const hoje = new Date();
+
+    const dia = String(hoje.getDate()).padStart(2, '0');
+    const mes = String(hoje.getMonth() + 1).padStart(2, '0');
+    const ano = hoje.getFullYear();
+
+    const hora = String(hoje.getHours()).padStart(2, '0');
+    const minutos = String(hoje.getMinutes()).padStart(2, '0');
+    const dataFormatada = `${dia}/${mes}/${ano} ${hora}:${minutos}`;
+    return dataFormatada;
+}
 
 const SalesScreen = () => {
 
     const [filter, setFilter] = useState("Todas")
 
     return (
-        <SafeAreaView style={styles.container}>
+        <SafeAreaView style={styles.container} showsVerticalScrollIndicator={false}>
             <View style={styles.header}>
                 <Text style={styles.title}>Gerenciar vendas</Text>
             </View>
@@ -37,7 +49,7 @@ const SalesScreen = () => {
                     )
                 }}
             />
-            <ScrollView style={{ flex: 1, marginTop: 20 }}>
+            <ScrollView style={{ flex: 1, marginTop: 20 }} showsVerticalScrollIndicator={false}>
                 {
                     ProductsList.map((__, index) => {
                         return (
@@ -46,7 +58,7 @@ const SalesScreen = () => {
                                     <Text style={[styles.textSync, { color: index % 2 === 0 ? "red" : Theme.primary }]}>
                                         {index % 2 === 0 ? "Não sincronizado" : "Sincronizado"}
                                     </Text>
-                                    <Text >{moment().locale('pt-br').format("LLL")}</Text>
+                                    <Text >{formatarData()}</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                     <Text style={styles.textSync}>Pagamento</Text>
